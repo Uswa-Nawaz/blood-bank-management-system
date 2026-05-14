@@ -1,0 +1,136 @@
+/* Reset and Body */
+* {
+    box-sizing: border-box; /* Crucial: Prevents padding from breaking width */
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color:#eee2e2;
+    margin: 0;
+    padding: 0;
+}
+
+/* THE MAIN HEADING CSS */
+.main-heading {
+    text-align: center;
+    color: #992828e3;
+    font-size: 36px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.form-container {
+    background-color: #dcd2ccd5;
+    padding: 30px;
+    border-radius: 10px;
+    border: #13121299 1px solid;
+    box-shadow: 0 4px 15px rgba(158, 47, 47, 0.1);
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto 50px auto; 
+}
+
+/* Form Elements Styling */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+    font-size: 14px;
+}
+
+/* Unified input and dropdown styling */
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: rgba(214, 197, 197, 0.901);
+    border: 1px solid #46434399;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: #333; /* Darker text for better visibility */
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #8835356f;
+    box-shadow: 0 0 10px rgba(157, 22, 22, 0.2);
+}
+
+/* Big Submit Button */
+button[type="submit"] {
+    width: 100%; 
+    padding: 14px;
+    background-color: #131212;
+    color: white;
+    border: 1px solid #420e0ec7;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #5f1313c7;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #1d1b1b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #992828e3;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #c7c2c2;
+    font-weight: 500;
+}
+
+.navbar ul li a:hover {
+    color: #992828e3;
+}
+
+/* Footer Link */
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #666;
+}
+
+.login-link a {
+    color: #d32f2f;
+    text-decoration: none;
+    font-weight: bold;
+}
