@@ -6,6 +6,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'Admin') {
     exit("Unauthorized access.");
 }
 
+//line 41, 52 in pending_approvals_view.php hidden item here, using method="GET";
 if (isset($_GET['id']) && isset($_GET['plan_id'])) {
     $id_to_approve = $_GET['id'];
     $plan_id = $_GET['plan_id'];

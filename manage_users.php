@@ -31,7 +31,7 @@ $users_sql = "SELECT u.userId, u.fullName, u.phone, u.role, b.bloodGroup
               FROM users u 
               LEFT JOIN bloodtypes b ON u.bloodTypeId = b.bloodTypeId 
               WHERE u.isApproved = 1 AND u.role != 'Admin'
-              ORDER BY u.fullName ASC";
+              ORDER BY u.userId ASC";
 $users_result = mysqli_query($conn, $users_sql);
 
 /**

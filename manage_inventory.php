@@ -35,7 +35,7 @@ $low_stock_result = mysqli_query($conn, $low_stock_query);
 // 4. MAIN TABLE DATA
 $inventory_sql = "SELECT i.*, t.bloodGroup FROM blood_inventory i 
                   JOIN bloodtypes t ON i.blood_type_id = t.bloodTypeId
-                  ORDER BY i.expiry_date ASC";
+                 ORDER BY i.inventory_id ASC";
 $inventory_items = mysqli_query($conn, $inventory_sql);
 
 // 5. LOAD THE VIEW
