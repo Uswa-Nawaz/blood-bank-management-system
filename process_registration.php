@@ -4,22 +4,28 @@ include 'db_connect.php';
 
 if (isset($_POST['register_submit'])) {
     
-    // Capture basic shared inputs safely
-    $name  = mysqli_real_escape_string($conn, $_POST['fullname']);
+    // Check if passwords match before anything else
     $pass  = mysqli_real_escape_string($conn, $_POST['password']);
+    $confirmPass = mysqli_real_escape_string($conn, $_POST['confirm_password']);
+
+    if ($pass !== $confirmPass) {
+        echo "<script>alert('Error: Passwords do not match! Please try again.'); window.history.back();</script>";
+        exit();
+    }
+    
+    // Capture remaining variables safely if password check passes
+    $name  = mysqli_real_escape_string($conn, $_POST['fullname']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $role  = mysqli_real_escape_string($conn, $_POST['role']); 
 
-    // Initialize relational foreign keys
     $bloodID = "NULL";
-    $planID  = 1; // Default to '1' (None) for individual accounts
+    $planID  = 1; // Default for individual accounts
 
-    // Execution Logic Routing Split
     if ($role === 'Hospital') {
         if (isset($_POST['plan_id'])) {
             $planID = intval($_POST['plan_id']);
         } else {
-            $planID = 2; // Default plan fallback protection
+            $planID = 2; 
         }
         
         $sql = "INSERT INTO users (fullName, password, phone, role, bloodTypeId, isApproved, plan_id) 
@@ -28,7 +34,6 @@ if (isset($_POST['register_submit'])) {
         executeRegistrationQuery($conn, $sql);
 
     } else {
-        // Individual Path (Donor or Acceptor processing)
         $bloodGrp = mysqli_real_escape_string($conn, $_POST['blood_group']);
 
         $type_query = "SELECT bloodTypeId FROM bloodtypes WHERE bloodGroup = '$bloodGrp'";

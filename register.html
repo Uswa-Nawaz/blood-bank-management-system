@@ -34,6 +34,11 @@
             </div>
 
             <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" placeholder="Retype your password" required minlength="6">
+            </div>
+
+            <div class="form-group">
                 <label>Phone Number</label>
                 <input type="tel" name="phone" placeholder="03─────────" required pattern="03[0-9]{9}" maxlength="11">
             </div>
@@ -88,10 +93,8 @@
 
     <script>
         function toggleRegistrationTrack(trackName) {
-            // Manage visual tab active classes
             document.querySelectorAll('.role-tab').forEach(btn => btn.classList.remove('active'));
             
-            // Elements cache mapping
             const nameLabel = document.getElementById('name-label');
             const individualTrack = document.getElementById('individual-fields-track');
             const corporateTrack = document.getElementById('corporate-fields-track');
@@ -104,28 +107,24 @@
                 document.getElementById('tab-hospital').classList.add('active');
                 nameLabel.innerText = "Hospital / Medical Center Name";
                 
-                // Hide and disable Individual input attributes
                 individualTrack.style.display = 'none';
                 roleSelect.setAttribute('disabled', 'disabled');
                 bloodSelect.removeAttribute('required');
                 bloodSelect.value = ""; 
                 
-                // Expose and enable Corporate inputs
                 corporateTrack.style.display = 'block';
                 planSelect.setAttribute('required', 'required');
                 hospitalHiddenRole.removeAttribute('disabled');
-                hospitalHiddenRole.name = "role"; // Swaps the active POST name field smoothly
+                hospitalHiddenRole.name = "role"; 
             } else {
                 document.getElementById('tab-individual').classList.add('active');
                 nameLabel.innerText = "Full Name";
                 
-                // Hide and disable Corporate input elements
                 corporateTrack.style.display = 'none';
                 planSelect.removeAttribute('required');
                 hospitalHiddenRole.setAttribute('disabled', 'disabled');
                 hospitalHiddenRole.name = "hospital_role_placeholder";
                 
-                // Expose and enable Individual inputs
                 individualTrack.style.display = 'block';
                 roleSelect.removeAttribute('disabled');
                 roleSelect.name = "role";
