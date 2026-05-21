@@ -13,53 +13,71 @@
         </ul>
     </nav>
 
-    <h1 class="main-heading"> BloodConnect</h1>
+    <h1 class="main-heading">BloodConnect</h1>
 
     <div class="form-container">
+        <div class="role-tab-container">
+            <button type="button" class="role-tab active" id="tab-individual" onclick="toggleRegistrationTrack('Individual')">Individual</button>
+            <button type="button" class="role-tab" id="tab-hospital" onclick="toggleRegistrationTrack('Hospital')">Hospital / Center</button>
+        </div>
+
         <form action="process_registration.php" method="POST">
             
             <div class="form-group">
-                <label>Full Name / Hospital Name</label>
-                <input type="text" name="fullname" placeholder="Enter your name" required>
+                <label id="name-label">Full Name</label>
+                <input type="text" name="fullname" placeholder="Enter your complete name" required minlength="4" maxlength="50">
             </div>
 
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Create a password" required>
+                <input type="password" name="password" placeholder="Create a secure password" required minlength="6">
             </div>
 
             <div class="form-group">
                 <label>Phone Number</label>
-                <input type="tel" name="phone" placeholder="03xxxxxxxxx" required>
+                <input type="tel" name="phone" placeholder="03─────────" required pattern="03[0-9]{9}" maxlength="11">
             </div>
 
-            <div class="form-group">
-                <label>Register As (Role)</label>
-                <select name="role" required>
-                    <option value="Donor">Donor</option>
-                    <option value="Acceptor">Acceptor</option>
-                    <option value="Hospital">Hospital / Medical Center </option>
-                    <!-- No Admin option here for security! -->
-                </select>
+            <div id="individual-fields-track">
+                <div class="form-group">
+                    <label>Register As</label>
+                    <select name="role" id="user_role">
+                        <option value="Donor">Donor (I want to donate blood)</option>
+                        <option value="Acceptor">Acceptor (I need blood requests)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <select name="blood_group" id="blood_group" required>
+                        <option value="">Select Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Blood Group</label>
-                <select name="blood_group" required>
-                    <option value="">Select Group</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                </select>
+            <div id="corporate-fields-track" style="display: none;">
+                <input type="hidden" name="hospital_role_placeholder" id="hospital_role_value" value="Hospital" disabled>
+
+                <div class="form-group">
+                    <label>Select Corporate Subscription Plan</label>
+                    <select name="plan_id" id="plan_id">
+                        <option value="2">Basic Plan (50 Units Capacity)</option>
+                        <option value="3">Standard Plan (150 Units Capacity)</option>
+                        <option value="4">Premium Plan (Unlimited Access)</option>
+                    </select>
+                </div>
             </div>
 
             <div style="text-align: center;">
-                <button type="submit" name="register_submit">Register Now</button>
+                <button type="submit" name="register_submit" class="submit-btn">Register Now</button>
             </div>
         </form>
 
@@ -67,5 +85,53 @@
             Already Have An Account? <a href="login.html">Login</a>
         </p>
     </div>
+
+    <script>
+        function toggleRegistrationTrack(trackName) {
+            // Manage visual tab active classes
+            document.querySelectorAll('.role-tab').forEach(btn => btn.classList.remove('active'));
+            
+            // Elements cache mapping
+            const nameLabel = document.getElementById('name-label');
+            const individualTrack = document.getElementById('individual-fields-track');
+            const corporateTrack = document.getElementById('corporate-fields-track');
+            const roleSelect = document.getElementById('user_role');
+            const bloodSelect = document.getElementById('blood_group');
+            const planSelect = document.getElementById('plan_id');
+            const hospitalHiddenRole = document.getElementById('hospital_role_value');
+
+            if (trackName === 'Hospital') {
+                document.getElementById('tab-hospital').classList.add('active');
+                nameLabel.innerText = "Hospital / Medical Center Name";
+                
+                // Hide and disable Individual input attributes
+                individualTrack.style.display = 'none';
+                roleSelect.setAttribute('disabled', 'disabled');
+                bloodSelect.removeAttribute('required');
+                bloodSelect.value = ""; 
+                
+                // Expose and enable Corporate inputs
+                corporateTrack.style.display = 'block';
+                planSelect.setAttribute('required', 'required');
+                hospitalHiddenRole.removeAttribute('disabled');
+                hospitalHiddenRole.name = "role"; // Swaps the active POST name field smoothly
+            } else {
+                document.getElementById('tab-individual').classList.add('active');
+                nameLabel.innerText = "Full Name";
+                
+                // Hide and disable Corporate input elements
+                corporateTrack.style.display = 'none';
+                planSelect.removeAttribute('required');
+                hospitalHiddenRole.setAttribute('disabled', 'disabled');
+                hospitalHiddenRole.name = "hospital_role_placeholder";
+                
+                // Expose and enable Individual inputs
+                individualTrack.style.display = 'block';
+                roleSelect.removeAttribute('disabled');
+                roleSelect.name = "role";
+                bloodSelect.setAttribute('required', 'required');
+            }
+        }
+    </script>
 </body>
 </html>

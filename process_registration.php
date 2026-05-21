@@ -2,50 +2,61 @@
 // Establish connection to database
 include 'db_connect.php';
 
-//isset(...), This function checks if a variable exists and is not empty.
-if (isset($_POST['register_submit']))
-    {
+if (isset($_POST['register_submit'])) {
     
-        // Capture the data from register.html
-        $name     = $_POST['fullname'];
-        $pass     = $_POST['password'];
-        $phone    = $_POST['phone'];
-        $role     = $_POST['role'];       // Either 'Donor' or 'Acceptor'
-        $bloodGrp = $_POST['blood_group']; // The string like 'A+', 'B+', etc.
+    // Capture basic shared inputs safely
+    $name  = mysqli_real_escape_string($conn, $_POST['fullname']);
+    $pass  = mysqli_real_escape_string($conn, $_POST['password']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $role  = mysqli_real_escape_string($conn, $_POST['role']); 
 
-        //When the user clicks "Submit," PHP grabs the choice from the HTML and stores it in $bloodGrp variable.
+    // Initialize relational foreign keys
+    $bloodID = "NULL";
+    $planID  = 1; // Default to '1' (None) for individual accounts
+
+    // Execution Logic Routing Split
+    if ($role === 'Hospital') {
+        if (isset($_POST['plan_id'])) {
+            $planID = intval($_POST['plan_id']);
+        } else {
+            $planID = 2; // Default plan fallback protection
+        }
+        
+        $sql = "INSERT INTO users (fullName, password, phone, role, bloodTypeId, isApproved, plan_id) 
+                VALUES ('$name', '$pass', '$phone', '$role', NULL, 0, $planID)";
+                
+        executeRegistrationQuery($conn, $sql);
+
+    } else {
+        // Individual Path (Donor or Acceptor processing)
+        $bloodGrp = mysqli_real_escape_string($conn, $_POST['blood_group']);
+
         $type_query = "SELECT bloodTypeId FROM bloodtypes WHERE bloodGroup = '$bloodGrp'";
-        //This give the  sqlcommand to $conn and save the result in $result
         $result = mysqli_query($conn, $type_query);
         
-        if ($row = mysqli_fetch_assoc($result)) 
-        {
-            $bloodID = $row['bloodTypeId'];
+        if ($row = mysqli_fetch_assoc($result)) {
+            $bloodID = intval($row['bloodTypeId']);
 
-            // Insert into the 'users' table
-            // isApproved defaults to 0 so the Admin must verify them later
-            $sql = "INSERT INTO users (fullName, password, phone, role, bloodTypeId, isApproved) 
-                    VALUES ('$name', '$pass', '$phone', '$role', '$bloodID', 0)";
-
-            if (mysqli_query($conn, $sql))
-            {
-                // Instead of echoing HTML here, we use a Javascript alert and redirect
-                // This keeps this file as pure "Backend Logic"
-                echo "<script>
-                        alert('Registration Successful! Your account is pending Admin approval.');
-                        window.location.href='login.html';
-                    </script>";
-                exit();
-            }
-            else
-            {
-                echo "Database Error: " . mysqli_error($conn);
-            }
-        }
-        else
-        {
-            echo "<script>alert('Error: Invalid blood group selected.'); window.history.back();</script>";
+            $sql = "INSERT INTO users (fullName, password, phone, role, bloodTypeId, isApproved, plan_id) 
+                    VALUES ('$name', '$pass', '$phone', '$role', $bloodID, 0, $planID)";
+                    
+            executeRegistrationQuery($conn, $sql);
+        } else {
+            echo "<script>alert('Error: Invalid blood group selection.'); window.history.back();</script>";
             exit();
         }
     }
+}
+
+function executeRegistrationQuery($connectionMatrix, $queryExecutionString) {
+    if (mysqli_query($connectionMatrix, $queryExecutionString)) {
+        echo "<script>
+                alert('Registration Successful! Your account is pending Admin approval.');
+                window.location.href='login.html';
+              </script>";
+        exit();
+    } else {
+        echo "Database Transaction Error: " . mysqli_error($connectionMatrix);
+    }
+}
 ?>

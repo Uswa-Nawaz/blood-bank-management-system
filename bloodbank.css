@@ -1,39 +1,103 @@
-/* Reset and Body */
+/* Reset and Base Canvas Elements */
 * {
-    box-sizing: border-box; /* Crucial: Prevents padding from breaking width */
-}
-
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color:#eee2e2;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* THE MAIN HEADING CSS */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #faf6f0; /* Soft Off-White/Cream Background Canvas */
+    min-height: 100vh;
+}
+
+/* Header Component */
+.navbar {
+    background-color: #1d1b1b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #faf6f0;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #c7c2c2;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.navbar ul li a:hover {
+    color: #7c1616;
+}
+
+/* Branding Heading */
 .main-heading {
     text-align: center;
-    color: #992828e3;
+    color: #510a0a; /* Dark Blood Crimson */
     font-size: 36px;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin: 40px 0 20px 0;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
+/* Centralized Form Container Face */
 .form-container {
-    background-color: #dcd2ccd5;
+    background-color: #fffdec; /* Soft Warm Ivory Sheet */
     padding: 30px;
-    border-radius: 10px;
-    border: #13121299 1px solid;
-    box-shadow: 0 4px 15px rgba(158, 47, 47, 0.1);
-    width: 90%;
-    max-width: 450px;
-    margin: 0 auto 50px auto; 
+    border-radius: 12px;
+    border: 1px solid #d3c8be;
+    box-shadow: 0 8px 24px rgba(81, 10, 10, 0.08);
+    width: 95%;
+    max-width: 480px;
+    margin: 0 auto 50px auto;
 }
 
-/* Form Elements Styling */
+/* Segmented Control Bar Framework Inside Card */
+.role-tab-container {
+    display: flex;
+    background-color: #e3dcd6;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+}
+
+.role-tab {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555; /* Soft Subtle Charcoal Text */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Tab Active Toggle Status Styles */
+.role-tab.active {
+    background-color: #fffdec;
+    color: #7c1616; /* Theme Accent Secondary Red */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+}
+
+/* Standardized Field Spacing Blocks */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -43,94 +107,60 @@ label {
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #444;
+    color: #333; /* Strong Charcoal For Visual Readability */
     font-size: 14px;
 }
 
-/* Unified input and dropdown styling */
+/* Standardized Input Component Matrix */
 input[type="text"],
 input[type="password"],
 input[type="tel"],
 select {
     width: 100%;
     padding: 12px 15px;
-    background-color: rgba(214, 197, 197, 0.901);
-    border: 1px solid #46434399;
+    background-color: #ffffff;
+    border: 1px solid #bbb;
     border-radius: 6px;
     font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    color: #333; /* Darker text for better visibility */
+    color: #333;
     outline: none;
+    transition: all 0.2s ease;
 }
 
 input:focus, select:focus {
-    border-color: #8835356f;
-    box-shadow: 0 0 10px rgba(157, 22, 22, 0.2);
+    border-color: #7c1616;
+    box-shadow: 0 0 6px rgba(124, 22, 22, 0.25);
 }
 
-/* Big Submit Button */
-button[type="submit"] {
-    width: 100%; 
+/* Theme Uniform Submit Button Control */
+.submit-btn {
+    width: 100%;
     padding: 14px;
-    background-color: #131212;
+    background-color: #510a0a; /* Dark Red */
     color: white;
-    border: 1px solid #420e0ec7;
+    border: none;
     border-radius: 25px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
     margin-top: 10px;
 }
 
-button[type="submit"]:hover {
-    background-color: #5f1313c7;
+.submit-btn:hover {
+    background-color: #7c1616; /* Lighter Red Hover Accent */
 }
 
-/* Navbar */
-.navbar {
-    background-color: #1d1b1b;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 50px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #992828e3;
-}
-
-.navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 30px;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: #c7c2c2;
-    font-weight: 500;
-}
-
-.navbar ul li a:hover {
-    color: #992828e3;
-}
-
-/* Footer Link */
+/* Bottom Interface Redirection Elements */
 .login-link {
     text-align: center;
     margin-top: 25px;
     font-size: 14px;
-    color: #666;
+    color: #555;
 }
 
 .login-link a {
-    color: #d32f2f;
+    color: #7c1616;
     text-decoration: none;
     font-weight: bold;
 }
