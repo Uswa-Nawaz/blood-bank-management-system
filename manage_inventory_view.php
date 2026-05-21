@@ -11,6 +11,7 @@
         <a href="admin_dashboard.php">Overview</a>
         <a href="manage_inventory.php" class="active">Inventory</a>
         <a href="pending_approvals.php">User Approvals (<?php echo $pending_count; ?>)</a>
+        <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
         <a href="manage_users.php">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
         <a href="view_invoices.php">Invoices</a>

@@ -42,6 +42,7 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
         <a href="admin_dashboard.php">Overview</a>
         <a href="manage_inventory.php">Inventory</a>
         <a href="pending_approvals.php">User Approvals (<?php echo $pending_count; ?>)</a>
+        <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
         <a href="manage_users.php">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
         <a href="view_invoices.php" class="active">Invoices</a>
