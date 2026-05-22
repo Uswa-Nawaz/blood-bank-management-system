@@ -19,6 +19,7 @@ It contains the
         <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
         <a href="manage_users.php">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
+        <a href="manage_donations.php" class="<?php echo ($current_page == 'manage_donations') ? 'active' : ''; ?>">Donation Requests</a>
         <a href="view_invoices.php">Invoices</a>
         <a href="logout.php">Logout</a>
     </div>

@@ -16,8 +16,8 @@ $current_user_id = $_SESSION['user_id'];
 /** * 2. DATA PREPARATION (Business Logic Layer)
  */
 
-// A. Fetch User Profile Context and Blood Group String Representation
-$user_query = "SELECT u.fullName, b.bloodGroup 
+// A. Fetch User Profile Context and Blood Group String Representation (UPDATED)
+$user_query = "SELECT u.fullName, u.bloodTypeId, b.bloodGroup 
                FROM users u 
                LEFT JOIN bloodtypes b ON u.bloodTypeId = b.bloodTypeId 
                WHERE u.userId = $current_user_id";
@@ -36,8 +36,8 @@ $pending_query = "SELECT COUNT(*) as total FROM donationrequests
 $pending_result = mysqli_query($conn, $pending_query);
 $pending_requests = mysqli_fetch_assoc($pending_result)['total'] ?? 0;
 
-// D. Table Data: Recent Donation Activity Snapshots (FIXED QUERY)
-$history_sql = "SELECT d.requestedDate, d.status 
+// d. Table Data: Recent Donation Activity Snapshots (UPDATED TO FETCH ID)
+$history_sql = "SELECT d.donationId, d.requestedDate, d.status 
                 FROM donationrequests d
                 WHERE d.donorId = $current_user_id
                 ORDER BY d.requestedDate DESC 

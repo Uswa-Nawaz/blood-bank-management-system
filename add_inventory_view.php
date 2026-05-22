@@ -14,6 +14,7 @@
         <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
         <a href="manage_users.php">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
+        <a href="manage_donations.php" class="<?php echo ($current_page == 'manage_donations') ? 'active' : ''; ?>">Donation Requests</a>
         <a href="view_invoices.php">Invoices</a>
         <a href="logout.php">Logout</a>
     </div>
@@ -24,8 +25,10 @@
             <a href="manage_inventory.php" class="link-back">← Back to Stock</a>
         </div>
 
-        <div class="form-container">
+    <div class="form-container">
             <form action="add_inventory_action.php" method="POST">
+                
+                <input type="hidden" name="donation_req_id" value="<?php echo $req_id; ?>">
                 
                 <div class="form-grid">
                     <div class="form-group">
@@ -33,7 +36,9 @@
                         <select name="blood_type_id" required class="form-control">
                             <option value="">Select Group</option>
                             <?php while($type = mysqli_fetch_assoc($blood_types)): ?>
-                                <option value="<?php echo $type['bloodTypeId']; ?>"><?php echo $type['bloodGroup']; ?></option>
+                                <option value="<?php echo $type['bloodTypeId']; ?>" <?php echo ($type['bloodTypeId'] == $blood_group_id) ? 'selected' : ''; ?>>
+                                    <?php echo $type['bloodGroup']; ?>
+                                </option>
                             <?php endwhile; ?>
                         </select>
                     </div>
@@ -71,7 +76,7 @@
 
                 <div class="form-group">
                     <label>Donor ID (Optional Reference)</label>
-                    <input type="text" name="donor_ref" placeholder="Enter Donor User ID" class="form-control">
+                    <input type="text" name="donor_ref" value="<?php echo htmlspecialchars($donor_id); ?>" placeholder="Enter Donor User ID" class="form-control">
                 </div>
 
                 <button type="submit" name="submit_add" class="btn-submit">
@@ -79,6 +84,7 @@
                 </button>
             </form>
         </div>
+
     </div>
 </body>
 </html>
