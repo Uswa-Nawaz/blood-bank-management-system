@@ -67,7 +67,12 @@
                         <small>Units: <?php echo $inv_data['units_requested']; ?> | Priority: <?php echo ($inv_data['is_urgent'] ? 'Urgent' : 'Normal'); ?></small>
                     <?php endif; ?>
                 </td>
-                <td style="text-align: right; padding: 10px;">Rs. <?php echo number_format($subtotal, 2); ?></td>
+                <td style="text-align: right; padding: 10px;">
+                    Rs. <?php 
+                        // If it's a subscription, show total amount here. If it's a request, base blood price is 0.00
+                        echo ($inv_data['invoice_type'] == 'Subscription') ? number_format($total_amount, 2) : '0.00'; 
+                    ?>
+                </td>
             </tr>
             
             <?php if($inv_data['invoice_type'] == 'Request'): ?>

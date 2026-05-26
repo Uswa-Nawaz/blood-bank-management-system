@@ -9,19 +9,26 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'Admin') {
 }
 
 /**
- * FETCH INVOICES WITH FULL CONTEXT
- * Note: We use LEFT JOIN for requests/types to ensure the invoice 
- * is still visible even if a request was archived.
+ * FETCH INVOICES WITH FULL RELATIONAL CONTEXT (Option B Support)
+ * We pull structural details dynamically for both Hospital subscriptions and Acceptor requests.
  */
-$sql = "SELECT inv.*, u.fullName, b.bloodGroup, r.units_requested 
+$sql = "SELECT 
+            inv.*, 
+            b.bloodGroup, 
+            r.units_requested,
+            -- Determine the correct display name based on who owns the invoice type
+            IFNULL(u_sub.fullName, u_req.fullName) AS display_user_name
         FROM invoices inv
-        JOIN users u ON inv.user_id = u.userId
+        -- Pathway 1: For Hospital Subscription entries (using direct user_id)
+        LEFT JOIN users u_sub ON inv.user_id = u_sub.userId
+        -- Pathway 2: For Acceptor Request entries (using request link -> acceptor_id)
         LEFT JOIN blood_requests r ON inv.request_id = r.request_id
+        LEFT JOIN users u_req ON r.acceptor_id = u_req.userId
         LEFT JOIN bloodtypes b ON r.blood_type_id = b.bloodTypeId
         ORDER BY inv.invoice_date DESC";
 $result = mysqli_query($conn, $sql);
 
-// Summary Stats
+// Summary Stats: Fixed counting query so it doesn't accidentally skip records
 $stats_sql = "SELECT SUM(total_amount) as revenue, COUNT(*) as count FROM invoices WHERE payment_status = 'Paid'";
 $stats = mysqli_fetch_assoc(mysqli_query($conn, $stats_sql));
 
@@ -38,14 +45,13 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
 <body>
     <div class="sidebar">
         <h2>Admin Panel</h2>
-        <!-- Sidebar links remain same -->
         <a href="admin_dashboard.php">Overview</a>
         <a href="manage_inventory.php">Inventory</a>
         <a href="pending_approvals.php">User Approvals (<?php echo $pending_count; ?>)</a>
-        <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
+        <a href="manage_subscriptions.php">Manage Subscriptions</a>
         <a href="manage_users.php">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
-        <a href="manage_donations.php" class="<?php echo ($current_page == 'manage_donations') ? 'active' : ''; ?>">Donation Requests</a>
+        <a href="manage_donations.php">Donation Requests</a>
         <a href="view_invoices.php" class="active">Invoices</a>
         <a href="logout.php">Logout</a>
     </div>
@@ -53,11 +59,10 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
     <div class="main-content">
         <h1>Financial Records</h1>
 
-        <!-- Financial Summary Cards -->
         <div style="display: flex; gap: 20px; margin-bottom: 30px;">
             <div class="stat-card" style="background: #e3f2fd; border-left: 5px solid #2196f3; padding: 20px; flex: 1;">
                 <h3 style="margin: 0; color: #1976d2;">Total Revenue</h3>
-                <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">Rs. <?php echo number_format($stats['revenue'], 2); ?></p>
+                <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">Rs. <?php echo number_format($stats['revenue'] ?? 0, 2); ?></p>
             </div>
             <div class="stat-card" style="background: #e8f5e9; border-left: 5px solid #4caf50; padding: 20px; flex: 1;">
                 <h3 style="margin: 0; color: #388e3c;">Processed Invoices</h3>
@@ -84,9 +89,11 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
                         <?php while($row = mysqli_fetch_assoc($result)): ?>
                         <tr>
                             <td>#<?php echo $row['invoice_id']; ?></td>
-                            <td><strong><?php echo htmlspecialchars($row['fullName']); ?></strong></td>
+                            <td><strong><?php echo htmlspecialchars($row['display_user_name'] ?? 'System User'); ?></strong></td>
                             <td>
-                                <?php if($row['bloodGroup']): ?>
+                                <?php if($row['invoice_type'] === 'Subscription'): ?>
+                                    <span style="color: #666; font-style: italic;">Monthly Subscription</span>
+                                <?php elseif($row['bloodGroup']): ?>
                                     <span class="badge-blood"><?php echo $row['bloodGroup']; ?></span> 
                                     (<?php echo $row['units_requested']; ?> units)
                                 <?php else: ?>

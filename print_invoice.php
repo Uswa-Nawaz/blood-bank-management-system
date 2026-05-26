@@ -15,11 +15,12 @@ if (!isset($_GET['id'])) {
 
 $invoice_id = intval($_GET['id']);
 
-// 2. DATA RETRIEVAL (Using Prepared Statements for security)
+// 2. DATA RETRIEVAL (Fixed query chain using Option B architecture)
+// We link invoices -> blood_requests -> users, removing the dependence on inv.user_id.
 $sql = "SELECT inv.*, u.fullName, u.phone, b.bloodGroup, r.units_requested, r.is_urgent
         FROM invoices inv
-        JOIN users u ON inv.user_id = u.userId
-        LEFT JOIN blood_requests r ON inv.request_id = r.request_id
+        INNER JOIN blood_requests r ON inv.request_id = r.request_id
+        INNER JOIN users u ON r.acceptor_id = u.userId
         LEFT JOIN bloodtypes b ON r.blood_type_id = b.bloodTypeId
         WHERE inv.invoice_id = ?";
 
@@ -33,10 +34,9 @@ if (!$inv_data) {
 }
 
 // 3. CALCULATION LOGIC
-// Separate the math from the HTML to keep the logic clear
-$processing_fee = isset($inv_data['processing_fee']) ? $inv_data['processing_fee'] : 0;
-$subtotal = $inv_data['total_amount'];
-$final_total = ($inv_data['invoice_type'] == 'Request') ? ($subtotal + $processing_fee) : $subtotal;
+$processing_fee = isset($inv_data['processing_fee']) ? floatval($inv_data['processing_fee']) : 0;
+$total_amount = floatval($inv_data['total_amount']);
+$final_total = $total_amount;
 
 // 4. LOAD THE VIEW
 include 'print_invoice_view.php';
