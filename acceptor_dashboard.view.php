@@ -13,7 +13,6 @@
     <ul>
         <li><a href="acceptor_dashboard.php" class="active">Dashboard</a></li>
         <li><a href="acceptor_profile.php">My Profile</a></li>
-        <li><a href="acceptor_request.php">Request Blood</a></li>
         <li><a href="acceptor_invoices.php">Billing/Invoices</a></li>
         <li><a href="logout.php">Logout</a></li>
     </ul>
