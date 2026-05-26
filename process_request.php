@@ -21,7 +21,8 @@ $req_id = intval($_GET['id']); // Secure the ID
  * 2. DATA RETRIEVAL
  * Fetch request details along with Blood Group and Patient Name
  */
-$req_query = "SELECT r.*, b.bloodGroup, u.fullName 
+// Changed u.fullName to r.patient_name, and kept u.fullName as 'requestorName' if admin needs to know who submitted it
+$req_query = "SELECT r.*, b.bloodGroup, r.patient_name, u.fullName as requestorName 
               FROM blood_requests r 
               JOIN bloodtypes b ON r.blood_type_id = b.bloodTypeId 
               JOIN users u ON r.acceptor_id = u.userId

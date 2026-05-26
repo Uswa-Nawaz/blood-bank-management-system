@@ -1,0 +1,358 @@
+/* --- System Resets and Layout Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #f8f9fa;
+    color: #333333;
+    min-height: 100vh;
+}
+
+/* --- Admin Panel Sidebar Component Navigation --- */
+.sidebar {
+    width: 260px;
+    background-color: #b22222; /* Deep Admin Crimson Maroon */
+    color: #ffffff;
+    position: fixed;
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li a, .sidebar a {
+    display: block;
+    color: #f5f5f5;
+    text-decoration: none;
+    padding: 14px 25px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover, .sidebar a:hover {
+    background-color: #8b0000;
+    padding-left: 30px;
+}
+
+.sidebar ul li a.active {
+    background-color: #8b0000;
+    border-left: 5px solid #ffffff;
+    font-weight: 600;
+}
+
+/* --- Main Content Work Space Windows --- */
+.main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 40px;
+    background-color: #f8f9fa;
+}
+
+.topbar {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 15px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+/* --- Dynamic Metric Display Dashboard Grid Cards --- */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.card p {
+    font-size: 28px;
+    font-weight: 700;
+    color: #212529;
+}
+
+.card p.highlight {
+    color: #b22222;
+}
+
+.card p.balance {
+    color: #28a745;
+}
+
+/* --- Data Presentation Layout Section Tables --- */
+.table-section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.table-section h2 {
+    font-size: 20px;
+    color: #212529;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+table th {
+    background-color: #f1f3f5;
+    color: #495057;
+    font-weight: 600;
+    padding: 15px;
+    font-size: 14px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+table td {
+    padding: 15px;
+    font-size: 14.5px;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tr:hover td {
+    background-color: #f8f9fa;
+}
+
+.no-records {
+    text-align: center;
+    color: #6c757d;
+    padding: 30px !important;
+    font-style: italic;
+}
+
+/* --- System Informative Visual Badges and Label Blocks --- */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.badge.urgent {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.badge.normal {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.status-lbl {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: capitalize;
+}
+
+.status-lbl.pending {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-lbl.fulfilled {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-lbl.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* --- Interactive Input Request Form Controls --- */
+.request-form {
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    max-width: 650px;
+}
+
+.request-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.request-form input[type="text"],
+.request-form input[type="number"],
+.request-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 22px;
+    font-size: 14.5px;
+    color: #495057;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+}
+
+.request-form input:focus,
+.request-form select:focus {
+    border-color: #b22222;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.1);
+}
+
+.request-form button[type="submit"] {
+    background-color: #b22222;
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+.request-form button[type="submit"]:hover {
+    background-color: #8b0000;
+}
+
+/* --- Stacked Full-Width Workspace Component Panels --- */
+.full-width-form {
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+.full-width-form h2 {
+    font-size: 20px;
+    color: #212529;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* --- Professional 2-Column Grid Layout Structure --- */
+.request-grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 50px; /* Widens the field layout across the view */
+    row-gap: 20px;    /* Uniform vertical gaps between rows */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Professional Input Heights and Typographic Padding */
+.request-grid-form input[type="text"],
+.request-grid-form input[type="number"],
+.request-grid-form select {
+    width: 100%;
+    height: 48px; /* Perfectly standard premium form thickness */
+    padding: 0 16px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #495057;
+    background-color: #ffffff;
+    margin-bottom: 0 !important; /* Cleans up duplicate legacy spacing overrides */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.request-grid-form input:focus,
+.request-grid-form select:focus {
+    border-color: #b22222;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.1);
+}
+
+/* Aligns the Submit Button with Row 3 on the Right Side */
+.btn-container {
+    justify-content: flex-end; /* Pushes the button base down */
+}
+
+.submit-btn {
+    background-color: #b22222;
+    color: #ffffff;
+    border: none;
+    padding: 0 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    height: 48px; /* Matches the input heights identically */
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 5px rgba(178, 34, 34, 0.2);
+}
+
+.submit-btn:hover {
+    background-color: #8b0000;
+}
+
+.margin-top-box {
+    margin-top: 15px;
+    width: 100%;
+}

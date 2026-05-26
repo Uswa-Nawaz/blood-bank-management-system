@@ -25,10 +25,9 @@
             <a href="manage_requests.php" class="link-back">← Back to Requests</a>
         </div>
 
-        <!-- Request Summary Card -->
         <div class="info-card">
             <div class="info-row">
-                <span><strong>Patient:</strong> <?php echo $req_data['fullName']; ?></span>
+                <span><strong>Patient:</strong> <?php echo htmlspecialchars($req_data['patient_name']); ?></span>
                 <span><strong>Group:</strong> <b class="text-danger"><?php echo $req_data['bloodGroup']; ?></b></span>
             </div>
             <div class="info-row">
