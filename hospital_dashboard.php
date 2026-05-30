@@ -152,8 +152,8 @@ require_once 'hospital_dashboard_backend.php';
                     <tbody>
                         <?php if(mysqli_num_rows($recent_result) > 0): ?>
                             <?php 
-                            $typeMap = [1=>'A+', 2=>'A-', 3=>'B+', 4=>'B-', 5=>'O+', 6=>'O-', 7=>'AB+', 8=>'AB-'];
-                            
+                            // Corrected to match database entries: 5=AB+, 6=AB-, 7=O+, 8=O-
+                            $typeMap = [1=>'A+', 2=>'A-', 3=>'B+', 4=>'B-', 5=>'AB+', 6=>'AB-', 7=>'O+', 8=>'O-'];                            
                             while($req = mysqli_fetch_assoc($recent_result)): 
                                 $badgeClass = 'badge-pending';
                                 if($req['status'] == 'Approved' || $req['status'] == 'Fulfilled') $badgeClass = 'badge-approved';

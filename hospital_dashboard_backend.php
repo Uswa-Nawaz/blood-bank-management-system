@@ -83,16 +83,16 @@ $emergency_cases = mysqli_fetch_assoc($emergency_result)['emergency_count'] ?? 0
 
 
 // --- 2. DYNAMIC STOCK LEVEL MATRIX ---
-// Mapping your blood_type_id integers to their layout presentation properties
+// Corrected key mappings to align perfectly with the lookup IDs
 $stock_levels = [
     1 => ['name' => 'A+',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
     2 => ['name' => 'A-',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
     3 => ['name' => 'B+',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
     4 => ['name' => 'B-',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
-    5 => ['name' => 'O+',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
-    6 => ['name' => 'O-',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
-    7 => ['name' => 'AB+', 'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
-    8 => ['name' => 'AB-', 'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical']
+    5 => ['name' => 'AB+', 'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
+    6 => ['name' => 'O-',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'], // Changed from AB- to O-
+    7 => ['name' => 'O+',  'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical'],
+    8 => ['name' => 'AB-', 'count' => 0, 'pct' => 0, 'class' => 'fill-low', 'badge' => 'badge-low', 'txt' => 'Critical']  // Changed from O- to AB-
 ];
 
 // Query metrics grouped directly by blood_type_id
