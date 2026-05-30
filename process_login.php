@@ -32,7 +32,7 @@ if (isset($_POST['login_submit'])) {
             header("Location: acceptor_dashboard.php");
         } 
         elseif ($role == 'Hospital') {
-            header("Location: hospital_dashboard.php"); // Safely linked
+            header("Location: hospital_dashboard.php"); 
         }
         elseif ($role == 'Admin') {
             header("Location: admin_dashboard.php");
