@@ -7,7 +7,7 @@ require_once 'hospital_dashboard_backend.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard – LifeBank Hospital</title>
+    <title>Dashboard – BloodConnect</title>
     <link rel="stylesheet" href="hospital.css">
 </head>
 <body>
@@ -23,8 +23,14 @@ require_once 'hospital_dashboard_backend.php';
         <ul>
             <li><a href="hospital_dashboard.php" class="active"><span class="nav-icon">🏠</span> Dashboard</a></li>
             <li><a href="hospital_blood_inventory.php"><span class="nav-icon">🩸</span> Blood Inventory</a></li>
+            </ul>
+                <div class="nav-section-label">Clinical</div>
+            <ul>
             <li><a href="hospital_patient_records.php"><span class="nav-icon">🧑‍⚕️</span> Patient Records</a></li>
             <li><a href="hospital_blood_requests.php"><span class="nav-icon">📋</span> Blood Requests</a></li>
+            </ul>
+                <div class="nav-section-label">Admin</div>
+            <ul>
             <li><a href="hospital_reports.php"><span class="nav-icon">📊</span> Reports</a></li>
             <li><a href="hospital_invoices.php"><span class="nav-icon">🧾</span> Invoices</a></li>
             <li><a href="hospital_settings.php"><span class="nav-icon">⚙️</span> Settings</a></li>
