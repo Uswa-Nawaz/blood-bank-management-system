@@ -2,15 +2,15 @@
 session_start();
 include 'db_connect.php';
 
-// Security Check
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'Admin') {
-    exit("Unauthorized.");
-}
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // LOGIC: Delete the specific blood unit
+    // 1. First, delete any transactions associated with this inventory ID
+    $delete_transactions = "DELETE FROM fulfillment_transactions WHERE inventory_id = $id";
+    mysqli_query($conn, $delete_transactions);
+
+    // 2. Now you can safely delete the inventory item
     $sql = "DELETE FROM blood_inventory WHERE inventory_id = $id";
 
     if (mysqli_query($conn, $sql)) {
@@ -19,4 +19,5 @@ if (isset($_GET['id'])) {
         echo "Error: " . mysqli_error($conn);
     }
 }
+
 ?>
