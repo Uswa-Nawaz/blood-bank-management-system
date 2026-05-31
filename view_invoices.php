@@ -9,26 +9,22 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'Admin') {
 }
 
 /**
- * FETCH INVOICES WITH FULL RELATIONAL CONTEXT (Option B Support)
- * We pull structural details dynamically for both Hospital subscriptions and Acceptor requests.
+ * FETCH INVOICES WITH FULL RELATIONAL CONTEXT
  */
 $sql = "SELECT 
             inv.*, 
             b.bloodGroup, 
             r.units_requested,
-            -- Determine the correct display name based on who owns the invoice type
             IFNULL(u_sub.fullName, u_req.fullName) AS display_user_name
         FROM invoices inv
-        -- Pathway 1: For Hospital Subscription entries (using direct user_id)
         LEFT JOIN users u_sub ON inv.user_id = u_sub.userId
-        -- Pathway 2: For Acceptor Request entries (using request link -> acceptor_id)
         LEFT JOIN blood_requests r ON inv.request_id = r.request_id
         LEFT JOIN users u_req ON r.acceptor_id = u_req.userId
         LEFT JOIN bloodtypes b ON r.blood_type_id = b.bloodTypeId
         ORDER BY inv.invoice_date DESC";
 $result = mysqli_query($conn, $sql);
 
-// Summary Stats: Fixed counting query so it doesn't accidentally skip records
+// Summary Stats
 $stats_sql = "SELECT SUM(total_amount) as revenue, COUNT(*) as count FROM invoices WHERE payment_status = 'Paid'";
 $stats = mysqli_fetch_assoc(mysqli_query($conn, $stats_sql));
 
@@ -102,15 +98,20 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
                             </td>
                             <td>Rs. <?php echo number_format($row['total_amount'], 2); ?></td>
                             <td>
-                                <span class="status-pill <?php echo strtolower($row['payment_status']); ?>">
-                                    <?php echo $row['payment_status']; ?>
-                                </span>
+                                <?php if (floatval($row['total_amount']) == 0.00): ?>
+                                    <span class="status-pill settled" style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Settled</span>
+                                <?php else: ?>
+                                    <span class="status-pill <?php echo strtolower($row['payment_status']); ?>">
+                                        <?php echo $row['payment_status']; ?>
+                                    </span>
+                                <?php endif; ?>
                             </td>
                             <td><?php echo date('d M, Y', strtotime($row['invoice_date'])); ?></td>
                             <td>
-                                <a href="print_invoice.php?id=<?php echo $row['invoice_id']; ?>" class="btn-view">View</a>
-                                <?php if (strtoupper($row['payment_status']) === 'UNPAID'): ?>
-                                    | <a href="mark_paid.php?id=<?php echo $row['invoice_id']; ?>" class="btn-pay">Mark Paid</a>
+                                <a href="print_invoice.php?id=<?php echo $row['invoice_id']; ?>">View</a> 
+                                
+                                <?php if (floatval($row['total_amount']) > 0 && strtolower($row['payment_status']) !== 'paid'): ?>
+                                    | <a href="mark_paid.php?id=<?php echo $row['invoice_id']; ?>" style="color: blue;">Mark Paid</a>
                                 <?php endif; ?>
                             </td>
                         </tr>

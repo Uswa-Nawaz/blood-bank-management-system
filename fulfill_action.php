@@ -54,18 +54,68 @@ if (isset($_GET['req_id']) && isset($_GET['bag_id'])) {
             $stmt_update->bind_param("i", $req_id);
             $stmt_update->execute();
 
-            // Setup and issue the Invoice ONLY when fully completed
-            $fee_per_bag = 500.00; 
-            $processing_fee = $fee_per_bag * $units_requested;
-            $total_amount = $processing_fee;
+            // Pull plan information along with the acceptor's ID
+            $stmt_user = $conn->prepare("
+                SELECT u.role, u.userId, p.plan_name, p.price_per_unit, p.unit_limit 
+                FROM blood_requests r
+                INNER JOIN users u ON r.acceptor_id = u.userId
+                LEFT JOIN subscription_plans p ON u.plan_id = p.plan_id
+                WHERE r.request_id = ?
+            ");
+            $stmt_user->bind_param("i", $req_id);
+            $stmt_user->execute();
+            $user_meta = $stmt_user->get_result()->fetch_assoc();
 
-            $stmt_inv = $conn->prepare("INSERT INTO invoices (request_id, total_amount, processing_fee, payment_status, invoice_type) VALUES (?, ?, ?, 'Unpaid', 'Request')");
+            if ($user_meta && $user_meta['role'] === 'Hospital') {
+                $acceptor_id = intval($user_meta['userId']);
+                $plan_limit = isset($user_meta['unit_limit']) ? intval($user_meta['unit_limit']) : null;
+                $price_per_unit = floatval($user_meta['price_per_unit'] ?? 0);
+                $plan_name = $user_meta['plan_name'] ?? 'None';
+                
+                // CRITICAL FIX: Exclude the current request_id from calculations so it isn't double-counted
+                $stmt_usage = $conn->prepare("
+                    SELECT SUM(r.units_requested) as units_used 
+                    FROM blood_requests r 
+                    WHERE r.acceptor_id = ? 
+                    AND r.request_id != ?
+                    AND r.status = 'Fulfilled' 
+                    AND MONTH(r.request_date) = MONTH(CURRENT_DATE())
+                    AND YEAR(r.request_date) = YEAR(CURRENT_DATE())
+                ");
+                $stmt_usage->bind_param("ii", $acceptor_id, $req_id);
+                $stmt_usage->execute();
+                $usage_data = $stmt_usage->get_result()->fetch_assoc();
+                
+                $current_usage = intval($usage_data['units_used'] ?? 0);
+
+                // Evaluate if this request is entirely free, partially billable, or fully an overage
+                if ($plan_name === 'Premium' || $plan_limit === null) {
+                    $total_amount = 0.00; 
+                } else if (($current_usage + $units_requested) <= $plan_limit) {
+                    $total_amount = 0.00; 
+                } else {
+                    if ($current_usage >= $plan_limit) {
+                        $billable_units = $units_requested;
+                    } else {
+                        $billable_units = ($current_usage + $units_requested) - $plan_limit;
+                    }
+                    $total_amount = $billable_units * $price_per_unit;
+                }
+                $processing_fee = 0.00; 
+            } else {
+                $fee_per_bag    = 500.00; 
+                $processing_fee = $fee_per_bag * $units_requested;
+                $total_amount   = $processing_fee;
+            }
+
+            // Insert the finalized row into invoices schema
+            $stmt_inv = $conn->prepare("INSERT INTO invoices (request_id, total_amount, processing_fee, payment_status, invoice_type, invoice_date) VALUES (?, ?, ?, 'Unpaid', 'Request', CURDATE())");
             $stmt_inv->bind_param("idd", $req_id, $total_amount, $processing_fee);
             $stmt_inv->execute();
 
             $redirect_msg = "fulfilled";
         } else {
-            // Request is only partially satisfied, keep it open for more assignments!
+            // Request is only partially satisfied, keep it open!
             $stmt_update = $conn->prepare("UPDATE blood_requests SET status = 'Partially Fulfilled' WHERE request_id = ?");
             $stmt_update->bind_param("i", $req_id);
             $stmt_update->execute();
@@ -76,7 +126,6 @@ if (isset($_GET['req_id']) && isset($_GET['bag_id'])) {
         // Commit changes if everything went smoothly
         mysqli_commit($conn);
         
-        // Redirect back to the processing panel view for that specific request to continue assigning remaining units
         header("Location: process_request.php?id=" . $req_id . "&msg=" . $redirect_msg);
         exit();
 

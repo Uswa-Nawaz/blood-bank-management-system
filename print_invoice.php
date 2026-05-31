@@ -15,12 +15,17 @@ if (!isset($_GET['id'])) {
 
 $invoice_id = intval($_GET['id']);
 
-// 2. DATA RETRIEVAL (Fixed query chain using Option B architecture)
-// We link invoices -> blood_requests -> users, removing the dependence on inv.user_id.
-$sql = "SELECT inv.*, u.fullName, u.phone, b.bloodGroup, r.units_requested, r.is_urgent
+// 2. DATA RETRIEVAL (Supports both Request and Subscription types seamlessly)
+$sql = "SELECT inv.*, 
+               b.bloodGroup, 
+               r.units_requested, 
+               r.is_urgent,
+               IFNULL(u_req.fullName, u_sub.fullName) AS fullName,
+               IFNULL(u_req.phone, u_sub.phone) AS phone
         FROM invoices inv
-        INNER JOIN blood_requests r ON inv.request_id = r.request_id
-        INNER JOIN users u ON r.acceptor_id = u.userId
+        LEFT JOIN blood_requests r ON inv.request_id = r.request_id
+        LEFT JOIN users u_req ON r.acceptor_id = u_req.userId
+        LEFT JOIN users u_sub ON inv.user_id = u_sub.userId
         LEFT JOIN bloodtypes b ON r.blood_type_id = b.bloodTypeId
         WHERE inv.invoice_id = ?";
 
