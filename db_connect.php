@@ -2,8 +2,8 @@
 // Database Configuration Constant, define
 // Using 'define' not variables, so it is not accidently changed in any other file 
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_USERNAME', 'bloodbank_app');
+define('DB_PASSWORD', 'StrongPass123!');
 define('DB_NAME', 'bloodsystem');
 
 // this variable is used on top of every file
@@ -25,3 +25,4 @@ mysqli_set_charset($conn, "utf8mb4");
 
 //No closing tag needed for PHP-only files, it prevents from sending accidental 
 //sending whitespace or blank line to the browser
+

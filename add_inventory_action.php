@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // 1. SECURITY GATE
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'Admin') {
@@ -54,35 +55,52 @@ if (isset($_POST['submit_add'])) {
     $stmt_insert = $conn->prepare($sql);
     $stmt_insert->bind_param("iisssss", $blood_type_id, $qty, $component, $loc, $expiry, $today, $donor_final_ref);
 
-    if ($stmt_insert->execute()) {
-        
-        // If this came from a donation request, flip its status to Completed
-        $donation_req_id = isset($_POST['donation_req_id']) ? intval($_POST['donation_req_id']) : 0;
-        
-        if ($donation_req_id > 0) {
-            // Update status and store the true volume drew during extraction
-            $update_sql = "UPDATE donationrequests 
-                           SET status = 'Completed', actualQuantityCollected = ? 
-                           WHERE donationId = ?";
-            $stmt_update = $conn->prepare($update_sql);
-            $stmt_update->bind_param("di", $qty, $donation_req_id);
-            $stmt_update->execute();
-            $stmt_update->close();
-            
-            // Redirect back to manage_donations with a success alert flag
-            header("Location: manage_donations.php?success=approved");
-            exit();
-        }
+    try {
 
-        // If it was just a standard manual addition, go back to inventory overview
-        header("Location: manage_inventory.php?success=1");
-        exit();
-    } else {
-        error_log("Inventory Error: " . $stmt_insert->error);
-        die("A database error occurred. Please try again.");
+    mysqli_begin_transaction($conn);
+
+    // Insert inventory record
+    $stmt_insert->execute();
+
+    $donation_req_id = isset($_POST['donation_req_id'])
+        ? intval($_POST['donation_req_id'])
+        : 0;
+
+    // If linked to a donation request, update it too
+    if ($donation_req_id > 0) {
+
+        $update_sql = "UPDATE donationrequests
+                       SET status = 'Completed',
+                           actualQuantityCollected = ?
+                       WHERE donationId = ?";
+
+        $stmt_update = $conn->prepare($update_sql);
+        $stmt_update->bind_param("di", $qty, $donation_req_id);
+        $stmt_update->execute();
+        $stmt_update->close();
     }
+
+    // Everything successful
+    mysqli_commit($conn);
+
+    if ($donation_req_id > 0) {
+        header("Location: manage_donations.php?success=approved");
+    } else {
+        header("Location: manage_inventory.php?success=1");
+    }
+
+    exit();
+
+} catch (Exception $e) {
+
+    mysqli_rollback($conn);
+
+    error_log("Transaction Error: " . $e->getMessage());
+
+    die("Transaction failed. Changes have been rolled back.");
+}
     
-    $stmt_insert->close();
+    
 
 } else {
     // This matches the opening if (isset($_POST['submit_add']))

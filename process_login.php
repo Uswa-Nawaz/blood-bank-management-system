@@ -3,15 +3,28 @@ session_start();
 include 'db_connect.php';
 
 if (isset($_POST['login_submit'])) {
-    $name = mysqli_real_escape_string($conn, $_POST['fullname']);
-    $pass = mysqli_real_escape_string($conn, $_POST['password']);
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
+    $name = trim($_POST['fullname']);
+$pass = $_POST['password'];
+$role = trim($_POST['role']);
 
-    $sql = "SELECT * FROM users WHERE fullName = '$name' AND password = '$pass' AND role = '$role'";
-    $result = mysqli_query($conn, $sql);
+    $stmt = mysqli_prepare($conn, 
+"SELECT userId, fullName, password, role, isApproved 
+FROM users 
+WHERE fullName = ? AND role = ?");
 
-    if (mysqli_num_rows($result) > 0) {
-        $user = mysqli_fetch_assoc($result);
+mysqli_stmt_bind_param($stmt, "ss", $name, $role);
+
+mysqli_stmt_execute($stmt);
+
+$result = mysqli_stmt_get_result($stmt);
+
+if ($user = mysqli_fetch_assoc($result)) {
+
+    // Verify hashed password
+    if (!password_verify($pass, $user['password'])) {
+        echo "<script>alert('Invalid Credentials or Wrong Role Selected!'); window.location.href='login.html';</script>";
+        exit();
+    }
 
         // Security check: Block unapproved non-admin users
         if ($user['role'] !== 'Admin' && $user['isApproved'] == 0) {
@@ -20,6 +33,7 @@ if (isset($_POST['login_submit'])) {
         }
 
         // Initialize Session Variables
+        session_regenerate_id(true);
         $_SESSION['user_id'] = $user['userId'];
         $_SESSION['user_role'] = $user['role'];
         $_SESSION['user_name'] = $user['fullName'];
@@ -32,7 +46,7 @@ if (isset($_POST['login_submit'])) {
             header("Location: acceptor_dashboard.php");
         } 
         elseif ($role == 'Hospital') {
-            header("Location: hospital_dashboard.php"); 
+            header("Location: hospital_dashboard.php"); // Safely linked
         }
         elseif ($role == 'Admin') {
             header("Location: admin_dashboard.php");

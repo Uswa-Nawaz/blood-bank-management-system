@@ -16,7 +16,7 @@ if (isset($_POST['fullname']) && isset($_POST['phone'])) {
     // 2. DATA SANITIZATION
     $fullname = trim($_POST['fullname']);
     $phone = trim($_POST['phone']);
-    $password_input = trim($_POST['password']); // Plain text input
+    $password_input = trim($_POST['password']); // User-entered password
 
     // Input validation checks
     if (empty($fullname) || empty($phone)) {
@@ -24,15 +24,25 @@ if (isset($_POST['fullname']) && isset($_POST['phone'])) {
     }
 
     /**
-     * 3. PLAIN TEXT UPDATE LOGIC
-     * No hashing algorithms applied here. It saves exactly what is typed.
-     */
+ * 3. SECURE PASSWORD HASHING UPDATE LOGIC
+ */
     if (!empty($password_input)) {
-        // Option A: Update with new password as a plain string
-        $sql = "UPDATE users SET fullName = ?, phone = ?, password = ? WHERE userId = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $fullname, $phone, $password_input, $current_user_id);
-    } else {
+
+    // Hash the new password before storing
+    $hashed_password = password_hash($password_input, PASSWORD_DEFAULT);
+
+    $sql = "UPDATE users SET fullName = ?, phone = ?, password = ? WHERE userId = ?";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param(
+        "sssi",
+        $fullname,
+        $phone,
+        $hashed_password,
+        $current_user_id
+    );
+} else {
         // Option B: Update details only, leaving current password untouched
         $sql = "UPDATE users SET fullName = ?, phone = ? WHERE userId = ?";
         $stmt = $conn->prepare($sql);

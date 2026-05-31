@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 /**
  * 1. SECURITY GATE
