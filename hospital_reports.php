@@ -31,7 +31,6 @@ require_once 'hospital_reports_backend.php';
             <ul>
             <li><a href="hospital_reports.php" class="active"><span>📊</span> Reports</a></li>
             <li><a href="hospital_invoices.php"><span>🧾</span> Invoices</a></li>
-            <li><a href="hospital_settings.php"><span>⚙️</span> Settings</a></li>
         </ul>
     </nav>
 </div>

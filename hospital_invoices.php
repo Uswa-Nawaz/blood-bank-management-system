@@ -108,7 +108,6 @@ $ledger_result = mysqli_stmt_get_result($stmt_ledger);
         <ul>
             <li><a href="hospital_reports.php"><span>📊</span> Reports</a></li>
             <li><a href="hospital_invoices.php" class="active"><span>🧾</span> Invoices</a></li>
-            <li><a href="hospital_settings.php"><span>⚙️</span> Settings</a></li>
         </ul>
     </nav>
     <div class="sidebar-footer"><a href="logout.php">🔒 Logout</a></div>

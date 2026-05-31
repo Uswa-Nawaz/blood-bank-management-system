@@ -32,7 +32,6 @@ require_once 'hospital_blood_inventory_backend.php';
             <ul>
             <li><a href="hospital_reports.php"><span class="nav-icon">📊</span> Reports</a></li>
             <li><a href="hospital_invoices.php"><span class="nav-icon">🧾</span> Invoices</a></li>
-            <li><a href="hospital_settings.php"><span class="nav-icon">⚙️</span> Settings</a></li>
         </ul>
     </nav>
     <div class="sidebar-footer">
