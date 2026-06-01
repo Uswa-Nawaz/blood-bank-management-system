@@ -124,13 +124,13 @@ $ledger_result = mysqli_stmt_get_result($stmt_ledger);
             <div class="card">
                 <div class="card-icon">🩸</div>
                 <h3>Bags Transfused This Month</h3>
-                <div class="card-value"><?php echo $total_bags_count; ?></div>
+                <div class="card-value" id="totalBagsCount"><?php echo $total_bags_count; ?></div>        <!-- js -->
                 <div class="card-sub">Total fulfilled volumes</div>
             </div>
             <div class="card card-gold">
                 <div class="card-icon">💰</div>
                 <h3>Total Settled Expenses</h3>
-                <div class="card-value">PKR <?php echo number_format($total_money_spent, 2); ?></div>
+                <div class="card-value" id="totalMoneySpent">PKR <?php echo number_format($total_money_spent, 2); ?></div>     <!-- js -->
                 <div class="card-sub">Paid historical invoices</div>
             </div>
         </div>
@@ -205,6 +205,40 @@ $ledger_result = mysqli_stmt_get_result($stmt_ledger);
         </div>
     </div>
 </div>
+
+
+
+<script>
+    // Animated number counter function
+    function animateCounter(elementId, target, prefix, suffix) {
+        const el = document.getElementById(elementId);
+        if (!el || isNaN(target)) return;
+
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = prefix + current.toLocaleString() + suffix;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const totalBags = parseInt(document.getElementById("totalBagsCount").textContent);
+    const totalSpent = parseInt(document.getElementById("totalMoneySpent").textContent.replace(/[^0-9]/g, ""));
+
+    animateCounter("totalBagsCount", totalBags, "", "");
+    animateCounter("totalMoneySpent", totalSpent, "PKR ", ".00");
+</script>
+
+
 
 </body>
 </html>

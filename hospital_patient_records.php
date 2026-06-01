@@ -101,7 +101,7 @@ require_once 'hospital_patient_records_backend.php';
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="patientsBody">      <!-- js -->
                     <?php if ($total_records === 0): ?>
                         <tr>
                             <td colspan="6" style="text-align:center; padding:40px 20px; color:var(--text-muted);">
@@ -143,5 +143,24 @@ require_once 'hospital_patient_records_backend.php';
 
     </div>
 </div>
+
+
+<script>
+    // Highlight Critical rows in red automatically
+    const rows = document.querySelectorAll("#patientsBody tr");
+
+    rows.forEach(function(row) {
+        const badgeCell = row.querySelector(".badge-critical");
+
+        if (badgeCell) {
+            // Highlight entire row in light red
+            row.style.backgroundColor = "#ffcccc";
+            row.style.borderLeft = "4px solid red";
+        }
+    });
+</script>
+
+
+
 </body>
 </html>

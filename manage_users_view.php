@@ -25,11 +25,11 @@
         <div class="card-container">
             <div class="card">
                 <h3>Accepted Donors</h3>
-                <p class="stat-number"><?php echo $donor_count; ?></p>
+                 <p class="stat-number" id="donorCount"><?php echo $donor_count; ?></p>     <!-- js -->
             </div>
             <div class="card">
                 <h3>Accepted Acceptors</h3>
-                <p class="stat-number"><?php echo $acceptor_count; ?></p>
+                <p class="stat-number" id="acceptorCount"><?php echo $acceptor_count; ?></p>       <!-- js -->
             </div>
         </div>
 
@@ -61,5 +61,38 @@
             </tbody>
         </table>
     </div>
+
+
+
+<script>
+    // Animated number counter function
+    function animateCounter(elementId, target) {
+        const el = document.getElementById(elementId);
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const donorCount = parseInt(document.getElementById("donorCount").textContent);
+    const acceptorCount = parseInt(document.getElementById("acceptorCount").textContent);
+
+    animateCounter("donorCount", donorCount);
+    animateCounter("acceptorCount", acceptorCount);
+</script>
+
+
+
 </body>
 </html>

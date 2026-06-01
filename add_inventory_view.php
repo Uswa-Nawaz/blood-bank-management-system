@@ -71,7 +71,11 @@
 
                 <div class="form-group">
                     <label>Expiry Date</label>
-                    <input type="date" name="expiry_date" min="<?php echo $today; ?>" required class="form-control">
+                    <input type="date" name="expiry_date" min="<?php echo $today; ?>" required class="form-control" id="expiryDate">
+<!-- js warning message -->
+<p id="expiryWarning" style="color:orange; font-size:13px; margin-top:5px; display:none;">
+    ⚠️ Warning: Expiry date is within 7 days — this unit will expire very soon!
+</p>          <!-- js -->
                 </div>
 
                 <div class="form-group">
@@ -86,5 +90,35 @@
         </div>
 
     </div>
+
+
+<script>
+    // Expiry date validator - warn if date is too close
+    const expiryInput = document.getElementById("expiryDate");
+    const expiryWarning = document.getElementById("expiryWarning");
+
+    expiryInput.addEventListener("change", function() {
+        const selectedDate = new Date(expiryInput.value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Calculate days difference
+        const diffTime = selectedDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays <= 7) {
+            // Warn if expiry is within 7 days
+            expiryWarning.style.display = "block";
+            expiryInput.style.borderColor = "orange";
+        } else {
+            // Hide warning if date is fine
+            expiryWarning.style.display = "none";
+            expiryInput.style.borderColor = "";
+        }
+    });
+</script>
+
+
+
 </body>
 </html>

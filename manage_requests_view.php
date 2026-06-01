@@ -36,7 +36,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="requestsBody">        <!-- js -->
                     <?php if (mysqli_num_rows($result) > 0): ?>
                         <?php while($row = mysqli_fetch_assoc($result)): 
                             $urgency_class = ($row['is_urgent']) ? 'status-urgent' : 'status-normal';
@@ -74,5 +74,26 @@
             </table>
         </div>
     </div>
+
+
+
+<script>
+    // Highlight urgent rows in red automatically
+    const rows = document.querySelectorAll("#requestsBody tr");
+
+    rows.forEach(function(row) {
+        const urgencyCell = row.querySelector(".urgency-badge");
+
+        if (urgencyCell && urgencyCell.classList.contains("status-urgent")) {
+            // Highlight entire row in light red
+            row.style.backgroundColor = "#ffcccc";
+            row.style.borderLeft = "4px solid red";
+        }
+    });
+</script>
+
+
+
+
 </body>
 </html>

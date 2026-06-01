@@ -47,19 +47,19 @@ require_once 'hospital_reports_backend.php';
             <div class="card">
                 <div class="card-icon">🩸</div>
                 <h3>Bags Requested</h3>
-                <div class="card-value"><?php echo $total_requested; ?></div>
+                 <div class="card-value" id="totalRequested"><?php echo $total_requested; ?></div>      <!-- js -->
                 <div class="card-sub">Total overall demands</div>
             </div>
             <div class="card card-teal">
                 <div class="card-icon">🧑‍⚕️</div>
                 <h3>Patients Monitored</h3>
-                <div class="card-value"><?php echo $pending_patients; ?></div>
+                <div class="card-value" id="pendingPatients"><?php echo $pending_patients; ?></div>     <!-- js -->
                 <div class="card-sub">Awaiting central approval</div>
             </div>
             <div class="card card-gold">
                 <div class="card-icon">💉</div>
                 <h3>Transfusions Done</h3>
-                <div class="card-value"><?php echo $total_used; ?></div>
+                <div class="card-value" id="totalUsed"><?php echo $total_used; ?></div>        <!-- js -->
                 <div class="card-sub">Total units successfully fulfilled</div>
             </div>
         </div>
@@ -90,6 +90,42 @@ require_once 'hospital_reports_backend.php';
 
     </div>
 </div>
+
+
+<script>
+    // Animated number counter function
+    function animateCounter(elementId, target) {
+        const el = document.getElementById(elementId);
+        if (!el || isNaN(target)) return;
+
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const totalRequested = parseInt(document.getElementById("totalRequested").textContent);
+    const pendingPatients = parseInt(document.getElementById("pendingPatients").textContent);
+    const totalUsed = parseInt(document.getElementById("totalUsed").textContent);
+
+    animateCounter("totalRequested", totalRequested);
+    animateCounter("pendingPatients", pendingPatients);
+    animateCounter("totalUsed", totalUsed);
+</script>
+
+
+
 
 </body>
 </html>

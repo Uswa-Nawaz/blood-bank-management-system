@@ -48,7 +48,9 @@
                         <th>Member Since</th>
                     </tr>
                 </thead>
-                <tbody >
+
+                <tbody id="hospitalsBody">     <!-- js -->
+
                     <?php if (mysqli_num_rows($subscribed_hospitals) > 0): ?>
                         <?php while($hospital = mysqli_fetch_assoc($subscribed_hospitals)): ?>
                         <tr>
@@ -72,5 +74,28 @@
             </table>
         </div>
     </div>
+
+
+<script>
+    // Highlight rows on hover
+    const rows = document.querySelectorAll("#hospitalsBody tr");
+
+    rows.forEach(function(row) {
+        row.addEventListener("mouseover", function() {
+            row.style.backgroundColor = "#fff0cc";
+            row.style.borderLeft = "4px solid #bc1c24";
+            row.style.cursor = "pointer";
+        });
+
+        row.addEventListener("mouseout", function() {
+            row.style.backgroundColor = "";
+            row.style.borderLeft = "";
+            row.style.cursor = "";
+        });
+    });
+</script>
+
+
+
 </body>
 </html>

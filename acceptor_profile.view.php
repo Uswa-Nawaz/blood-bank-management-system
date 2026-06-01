@@ -56,7 +56,7 @@
 
     <div class="form-section full-width-form">
         <h2>Update Profile Credentials</h2>
-        <form action="update_acceptor_profile.php" method="POST" class="request-grid-form">
+        <form action="update_acceptor_profile.php" method="POST" class="request-grid-form" id="acceptorProfileForm">    <!-- js -->
             
             <div class="form-group">
                 <label for="edit_name">Full Name</label>
@@ -87,6 +87,19 @@
         </form>
     </div>
 </div>
+
+
+<script>
+    // Confirmation popup before saving profile changes
+    document.getElementById("acceptorProfileForm").addEventListener("submit", function(e) {
+        const confirmed = confirm("Are you sure you want to save these profile changes?");
+
+        if (!confirmed) {
+            e.preventDefault(); // Stay on page if user clicks Cancel
+        }
+    });
+</script>
+
 
 </body>
 </html>

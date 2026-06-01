@@ -26,19 +26,19 @@
         <div class="card-container">
             <div class="card">
                 <h3>Total Inventory</h3>
-                <p class="stat-main"><?php echo number_format($total_units); ?> ml</p>
+                <p class="stat-main" id="totalUnits"><?php echo number_format($total_units); ?> ml</p>      <!-- js -->
             </div>
             <div class="card">
                 <h3>Available</h3>
-                <p class="stat-sub"><?php echo $avail_count; ?> Bags</p>
+                <p class="stat-sub" id="availCount"><?php echo $avail_count; ?> Bags</p>     <!-- js -->
             </div>
             <div class="card">
                 <h3>Reserved</h3>
-                <p class="stat-sub"><?php echo $reserved_count; ?> Bags</p> 
+                <p class="stat-sub" id="reservedCount"><?php echo $reserved_count; ?> Bags</p>       <!-- js -->
             </div>
             <div class="card">
                 <h3>Expired</h3>
-                <p class="stat-err"><?php echo $expired_count; ?> Bags</p>
+                <p class="stat-err" id="expiredCount"><?php echo $expired_count; ?> Bags</p>       <!-- js -->
             </div>
         </div>
 
@@ -98,5 +98,42 @@
             </table>
         </div>
     </div>
+
+
+
+    <script>
+    // Animated number counter function
+    function animateCounter(elementId, target, suffix) {
+        const el = document.getElementById(elementId);
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current + suffix;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const totalUnits = parseInt(document.getElementById("totalUnits").textContent);
+    const availCount = parseInt(document.getElementById("availCount").textContent);
+    const reservedCount = parseInt(document.getElementById("reservedCount").textContent);
+    const expiredCount = parseInt(document.getElementById("expiredCount").textContent);
+
+    animateCounter("totalUnits", totalUnits, " ml");
+    animateCounter("availCount", availCount, " Bags");
+    animateCounter("reservedCount", reservedCount, " Bags");
+    animateCounter("expiredCount", expiredCount, " Bags");
+</script>
+
+
+
 </body>
 </html>

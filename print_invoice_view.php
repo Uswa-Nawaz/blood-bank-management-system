@@ -67,12 +67,7 @@
                         <small>Units: <?php echo $inv_data['units_requested']; ?> | Priority: <?php echo ($inv_data['is_urgent'] ? 'Urgent' : 'Normal'); ?></small>
                     <?php endif; ?>
                 </td>
-                <td style="text-align: right; padding: 10px;">
-                    Rs. <?php 
-                        // If it's a subscription, show total amount here. If it's a request, base blood price is 0.00
-                        echo ($inv_data['invoice_type'] == 'Subscription') ? number_format($total_amount, 2) : '0.00'; 
-                    ?>
-                </td>
+                <td style="text-align: right; padding: 10px;">Rs. <?php echo number_format($subtotal, 2); ?></td>
             </tr>
             
             <?php if($inv_data['invoice_type'] == 'Request'): ?>
@@ -91,7 +86,7 @@
 
     <div style="margin-top: 60px; text-align: center; font-size: 12px; color: #888;">
         <p>This is a computer-generated receipt and does not require a physical signature.</p>
-        <button onclick="window.print()" class="btn-print">Print Invoice</button>
+        <button onclick="window.print()" class="btn-print">Print Invoice</button>           <!-- js -->
     </div>
 </div>
 

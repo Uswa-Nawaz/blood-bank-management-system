@@ -26,9 +26,24 @@
         <br>
         <p><strong>Blood Group:</strong> <?php echo htmlspecialchars($donor['bloodGroup'] ?? 'Not Assigned'); ?></p>
         <br>
-        <a href="edit_profile.php" class="link-back" style="display: inline-block; text-decoration: none; text-align: center;">Edit Profile</a>
+        <a href="edit_profile.php" class="link-back" style="display: inline-block; text-decoration: none; text-align: center;" id="editProfileBtn">Edit Profile</a>        <!-- js -->
     </div>
 </div>
+
+
+<script>
+    // Confirmation popup when clicking Edit Profile
+    document.getElementById("editProfileBtn").addEventListener("click", function(e) {
+        const confirmed = confirm("Are you sure you want to edit your profile?");
+
+        if (!confirmed) {
+            e.preventDefault(); // Stay on page if user clicks Cancel
+        }
+    });
+</script>
+
+
+
 
 </body>
 </html>

@@ -41,7 +41,7 @@
             <h3>Quick Status Update</h3>
             <div class="btn-group">
                 <a href="update_request_status.php?id=<?php echo $req_id; ?>&status=Rejected" 
-                   class="btn-danger" onclick="return confirm('Reject this request?')">Reject Request</a>
+                   class="btn-danger" onclick="return confirm('Reject this request?')">Reject Request</a>    <!-- js -->
                 
                 <a href="update_request_status.php?id=<?php echo $req_id; ?>&status=Pending" 
                    class="btn-secondary">Keep Pending</a>
@@ -73,7 +73,7 @@
                             <td><strong><?php echo $bag['expiry_date']; ?></strong></td>
                             <td>
                                 <a href="fulfill_action.php?req_id=<?php echo $req_id; ?>&bag_id=<?php echo $bag['inventory_id']; ?>" 
-                                   class="btn-assign" onclick="return confirm('Assign this bag?')">Assign Bag</a>
+                                   class="btn-assign" onclick="return confirm('Assign this bag?')">Assign Bag</a>         <!-- js -->
                             </td>
                         </tr>
                         <?php endwhile; ?>

@@ -52,7 +52,7 @@
                             <?php endif; ?>
                     </td>
                     <td>
-                            <button type="submit" class="btn-approve">Approve & Save</button>
+                            <button type="submit" class="btn-approve" onclick="return confirmApprove()">Approve & Save</button>       <!-- js -->
                         </form>
                     </td>
                 </tr>
@@ -63,5 +63,17 @@
         </tbody>
     </table>
 </div>
+
+
+<script>
+    // Confirmation popup before approving a user
+    function confirmApprove() {
+        return confirm("Are you sure you want to approve this user?");
+    }
+</script>
+
+
+
+
 </body>
 </html>
