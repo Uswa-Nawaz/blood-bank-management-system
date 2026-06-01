@@ -36,7 +36,7 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
 <head>
     <meta charset="UTF-8">
     <title>Invoices - Admin Panel</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="donor.css">
 </head>
 <body>
     <div class="sidebar">

@@ -8,7 +8,7 @@ It contains the
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard - BloodConnect</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="donor.css">
 </head>
 <body>
     <div class="sidebar">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Blood Unit - Admin</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="donor.css">
 </head>
 <body>
     <div class="sidebar">

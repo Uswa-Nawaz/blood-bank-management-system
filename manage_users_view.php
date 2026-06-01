@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Users - Admin</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="donor.css">
 </head>
 <body>
     <div class="sidebar">
@@ -11,7 +11,7 @@
         <a href="admin_dashboard.php">Overview</a>
         <a href="manage_inventory.php">Inventory</a>
         <a href="pending_approvals.php">User Approvals (<?php echo $pending_count; ?>)</a>
-        <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
+        <a href="manage_subscriptions.php">Manage Subscriptions</a>
         <a href="manage_users.php" class="active">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
         <a href="manage_donations.php" class="<?php echo ($current_page == 'manage_donations') ? 'active' : ''; ?>">Donation Requests</a>

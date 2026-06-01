@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Subscription Management - Admin</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="donor.css">
 </head>
 <body>
     <div class="sidebar">
@@ -11,7 +11,7 @@
         <a href="admin_dashboard.php">Overview</a>
         <a href="manage_inventory.php">Inventory</a>
         <a href="pending_approvals.php">User Approvals (<?php echo $pending_count; ?>)</a>
-        <a href="manage_subscriptions.php" class="active">Manage Subscriptions</a>
+        <a href="manage_subscriptions.php" >Manage Subscriptions</a>
         <a href="manage_users.php">Manage Users</a>
         <a href="manage_requests.php">Blood Requests</a>
         <a href="manage_donations.php" class="<?php echo ($current_page == 'manage_donations') ? 'active' : ''; ?>">Donation Requests</a>
@@ -21,8 +21,7 @@
 
     <div class="main-content">
         <h1>Subscription Framework & Tiers</h1>
-        <p>Overview of current corporate subscription parameters and active hospital licenses.</p>
-
+       
         <div class="card-container" style="display: flex; gap: 20px; margin-bottom: 30px;">
             <?php while($plan = mysqli_fetch_assoc($plans_data)): ?>
                 <div class="card" style="flex: 1; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff;">
@@ -37,7 +36,7 @@
 
         <div class="table-container">
             <h3>Subscribed Hospital Partners</h3>
-            <table>
+            <table style="margin-top: 20px;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -50,6 +49,7 @@
                     </tr>
                 </thead>
                 <tbody id="hospitalsBody">     <!-- js -->
+  
                     <?php if (mysqli_num_rows($subscribed_hospitals) > 0): ?>
                         <?php while($hospital = mysqli_fetch_assoc($subscribed_hospitals)): ?>
                         <tr>

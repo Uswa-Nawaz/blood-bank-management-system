@@ -1,0 +1,339 @@
+/* Reset and Body */
+* {
+    box-sizing: border-box; /* Crucial: Prevents padding from breaking width */
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #faf6f0; /* Soft Off-White/Cream Background Canvas */
+    min-height: 100vh;
+}
+
+/* THE MAIN HEADING CSS */
+.main-heading {
+    text-align: center;
+    color: #992828e3;
+    font-size: 36px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+.form-container {
+    background-color: #dcd2ccd5;
+    padding: 30px;
+    border-radius: 10px;
+    border: #13121299 1px solid;
+    box-shadow: 0 4px 15px rgba(158, 47, 47, 0.1);
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto 50px auto; 
+}
+
+/* Form Elements Styling */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+    font-size: 14px;
+    width: 78%;
+}
+
+/* Unified input and dropdown styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select, textarea{
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #d6c5c5e6;
+    border: 1px solid #46434399;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: #333; /* Darker text for better visibility */
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #8835356f;
+    box-shadow: 0 0 10px rgba(157, 22, 22, 0.2);
+}
+
+/* Big Submit Button */
+button[type="submit"] {
+    width: 100%; 
+    padding: 14px;
+    background-color: #131212;
+    color: white;
+    border: 1px solid #420e0ec7;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+ }
+
+ .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #3e0707; /* Dark Red */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #9b1616; /* Lighter Red Hover Accent */
+}
+
+ .btn {
+     display: inline-block;
+     background: black;
+     color: #fff;
+     padding: 8px 30px;
+     margin: 30px 0;
+     border-radius: 30px;
+ }
+ .btn-reservation {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+input:focus, select:focus {
+    border-color: #7c1616;
+    box-shadow: 0 0 6px rgba(124, 22, 22, 0.25);
+}
+
+button[type="submit"]:hover {
+    background-color: #851a1ac7;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #1d1b1b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #992828e3;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #c7c2c2;
+    font-weight: 500;
+}
+
+
+.navbar ul li a.active{
+    color: #992828e3;
+    padding-bottom: 5px;
+}
+
+
+/* --- Contact Page --- */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 15px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 50px 0;
+}
+.contact-info-card {
+    background: #dcd2ccd5;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+/* Contact Form Card */
+.card {
+    background: #fffdec;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+.card h3 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #8B0000;
+}
+
+/* Inputs */
+.card input,
+.card textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* Focus Effect */
+.card input:focus,
+.card textarea:focus {
+    outline: none;
+    border-color: #c62828;
+    box-shadow: 0 0 8px rgba(198, 40, 40, 0.3);
+}
+
+/* Textarea */
+.card textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Submit Button */
+.card button {
+    width: 100%;
+    padding: 12px;
+    background: #c62828;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card button:hover {
+    background: #8B0000;
+    transform: translateY(-2px);
+}
+
+
+
+/* Footer Link */
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #666;
+}
+
+.login-link a {
+    color: #d32f2f;
+    text-decoration: none;
+    font-weight: bold;
+}
+/* Footer */
+.footer{
+    background:black;
+    color:#8a8a8a;
+    font-size:14px;
+    padding:25px 0 25px;
+    text-align:center;
+    border-top:1px solid #333;
+    margin-top:auto;
+}
+ .footer p {
+     color: #8a8a8a;
+ }
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+}
+
+/* Dropdown Container */
+.dropdown{
+    position: relative;
+}
+
+/* Hidden Menu */
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1d1b1b;
+    min-width: 180px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Dropdown Links */
+.dropdown-menu li a{
+    display: block;
+    padding: 12px 15px;
+    color: #c7c2c2;
+    text-decoration: none;
+}
+
+/* Hover Effect */
+.dropdown-menu li a:hover{
+    background-color: #992828e3;
+    color: white;
+}
+
+/* Show Dropdown on Hover */
+.dropdown:hover .dropdown-menu{
+    display: block;
+}
+
+
+.dropdown-menu{
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.dropdown:hover .dropdown-menu{
+    opacity: 1;
+    visibility: visible;
+}
