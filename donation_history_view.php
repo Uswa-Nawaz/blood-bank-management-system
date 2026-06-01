@@ -22,7 +22,9 @@
 
     <div class="table-section">
 
-        <table>
+        <!-- Total donation count -->
+<p id="donationCount" style="font-weight:bold; margin-bottom:10px;"></p>    <!-- js for Adding a paragraph above the table to show the count -->
+<table>
             <thead>
                 <tr>
                     <th>Donation ID</th>
@@ -31,7 +33,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="donationBody">       <!-- js for Show total donation count on top -->
                 <?php if (mysqli_num_rows($history_result) > 0): ?>
                     <?php while($row = mysqli_fetch_assoc($history_result)): 
                         $status_class = strtolower($row['status']);
@@ -59,6 +61,17 @@
     </div>
 
 </div>
+
+<script>
+    // Count total donation rows
+    const rows = document.querySelectorAll("#donationBody tr");
+    const total = rows.length;
+
+    // Display count
+    document.getElementById("donationCount").textContent = "Total Donations: " + total;
+</script>
+
+
 
 </body>
 </html>

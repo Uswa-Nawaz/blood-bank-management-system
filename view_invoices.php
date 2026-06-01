@@ -111,7 +111,7 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
                                 <a href="print_invoice.php?id=<?php echo $row['invoice_id']; ?>">View</a> 
                                 
                                 <?php if (floatval($row['total_amount']) > 0 && strtolower($row['payment_status']) !== 'paid'): ?>
-                                    | <a href="mark_paid.php?id=<?php echo $row['invoice_id']; ?>" style="color: blue;">Mark Paid</a>
+                                    | <a href="mark_paid.php?id=<?php echo $row['invoice_id']; ?>" style="color: blue;" onclick="return confirmMarkPaid()">Mark Paid</a>    <!-- js: confirmation popup before marking invoice as paid -->
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -123,5 +123,16 @@ $pending_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tota
             </table>
         </div>
     </div>
+
+
+<script>
+    // Confirmation popup before marking invoice as paid
+    function confirmMarkPaid() {
+        return confirm("Are you sure you want to mark this invoice as Paid?");
+    }
+</script>
+
+
+    
 </body>
 </html>

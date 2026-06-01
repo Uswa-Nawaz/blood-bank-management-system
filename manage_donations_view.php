@@ -76,7 +76,7 @@
                                 <a href="approve_donation_action.php?id=<?php echo $row['donationId']; ?>" class="action-link-approve">
                                     Approve Slot
                                 </a>
-                                <a href="reject_donation_action.php?id=<?php echo $row['donationId']; ?>" onclick="return confirm('Are you sure you want to reject this appointment?');" class="reject-link">
+                                <a href="reject_donation_action.php?id=<?php echo $row['donationId']; ?>" onclick="return confirm('Are you sure you want to reject this appointment?');" class="reject-link">         <!-- js -->
                                     Reject
                                 </a>
                             </td>
@@ -116,7 +116,7 @@
                                 <a href="add_inventory.php?req_id=<?php echo $row['donationId']; ?>&donor_id=<?php echo $row['donorId']; ?>&blood_group_id=<?php echo $row['bloodTypeId']; ?>" class="action-link-collect">
                                     Process & Collect Blood
                                 </a>
-                                <a href="reject_donation_action.php?id=<?php echo $row['donationId']; ?>" onclick="return confirm('Mark as No-Show / Reject?');" class="reject-link">
+                                <a href="reject_donation_action.php?id=<?php echo $row['donationId']; ?>" onclick="return confirm('Mark as No-Show / Reject?');" class="reject-link">    <!-- js -->
                                     Cancel
                                 </a>
                             </td>

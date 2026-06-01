@@ -62,13 +62,13 @@ require_once 'hospital_blood_inventory_backend.php';
             <div class="card">
                 <div class="card-icon">🩸</div>
                 <h3>Total Bags</h3>
-                <div class="card-value"><?php echo $total_combined_bags; ?></div>
+                <div class="card-value" id="totalBags"><?php echo $total_combined_bags; ?></div>      <!-- js-->
                 <div class="card-sub">All blood types combined</div>
             </div>
             <div class="card card-gold">
                 <div class="card-icon">⚠️</div>
                 <h3>Low Stock Groups</h3>
-                <div class="card-value"><?php echo $low_stock_groups_count; ?></div>
+                <div class="card-value" id="lowStockCount"><?php echo $low_stock_groups_count; ?></div>       <!-- js-->
                 <div class="card-sub">Below minimum threshold</div>
             </div>
             <div class="card card-teal">
@@ -149,5 +149,39 @@ require_once 'hospital_blood_inventory_backend.php';
 
     </div>
 </div>
+
+
+<script>
+    // Animated number counter function
+    function animateCounter(elementId, target) {
+        const el = document.getElementById(elementId);
+        if (!el || isNaN(target)) return;
+
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const totalBags = parseInt(document.getElementById("totalBags").textContent);
+    const lowStockCount = parseInt(document.getElementById("lowStockCount").textContent);
+
+    animateCounter("totalBags", totalBags);
+    animateCounter("lowStockCount", lowStockCount);
+</script>
+
+
+
 </body>
 </html>

@@ -30,15 +30,15 @@ It contains the
         <div class="card-container">
             <div class="card">
                 <h3>Total Inventory</h3>
-                <p><?php echo number_format($total_inventory, 0); ?> ml</p>
+                <p id="totalInventory"><?php echo number_format($total_inventory, 0); ?> ml</p>       <!-- js -->
             </div>
             <div class="card">
                 <h3>Pending Approvals</h3>
-                <p><?php echo $pending_count; ?> Users</p>
+                <p id="pendingCount"><?php echo $pending_count; ?> Users</p>         <!-- js -->
             </div>
             <div class="card">
                 <h3>Urgent Requests</h3>
-                <p><?php echo $urgent_count; ?> Requests</p>
+                <p id="urgentCount"><?php echo $urgent_count; ?> Requests</p>        <!-- js -->
             </div>
         </div>
 
@@ -70,5 +70,40 @@ It contains the
             </tbody>
         </table>
     </div>
+
+
+<script>
+    // Animated number counter function
+    function animateCounter(elementId, target, suffix) {
+        const el = document.getElementById(elementId);
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current + suffix;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const totalInventory = parseInt(document.getElementById("totalInventory").textContent);
+    const pendingCount = parseInt(document.getElementById("pendingCount").textContent);
+    const urgentCount = parseInt(document.getElementById("urgentCount").textContent);
+
+    animateCounter("totalInventory", totalInventory, " ml");
+    animateCounter("pendingCount", pendingCount, " Users");
+    animateCounter("urgentCount", urgentCount, " Requests");
+</script>
+
+
+
+
 </body>
 </html>

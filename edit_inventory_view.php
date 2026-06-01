@@ -54,7 +54,14 @@
 
                 <div class="form-group">
                     <label>Quantity (ml)</label>
-                    <input type="number" name="quantity_ml" value="<?php echo $data['quantity_ml']; ?>" min="100" max="1000" required class="form-control">
+                    <input type="number" name="quantity_ml" value="<?php echo $data['quantity_ml']; ?>" min="100" max="1000" required class="form-control" id="quantity">
+                    
+<!-- js warning message -->
+<p id="qtyWarning" style="color:red; font-size:13px; margin-top:5px; display:none;">
+    ⚠️ Quantity must be between 100ml and 1000ml.
+</p>         <!-- js -->
+
+
                 </div>
 
                 <div class="form-group">
@@ -76,5 +83,30 @@
             </form>
         </div>
     </div>
+
+
+
+<script>
+    // Warn if quantity is out of range
+    const quantityInput = document.getElementById("quantity");
+    const qtyWarning = document.getElementById("qtyWarning");
+
+    quantityInput.addEventListener("input", function() {
+        const val = parseInt(quantityInput.value);
+
+        if (val < 100 || val > 1000 || isNaN(val)) {
+            // Show warning
+            qtyWarning.style.display = "block";
+            quantityInput.style.borderColor = "red";
+        } else {
+            // Hide warning
+            qtyWarning.style.display = "none";
+            quantityInput.style.borderColor = "";
+        }
+    });
+</script>
+
+
+
 </body>
 </html>

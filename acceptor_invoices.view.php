@@ -38,7 +38,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="invoicesBody">     <!-- js -->
                 <?php if ($result && mysqli_num_rows($result) > 0): ?>
                     <?php while($row = mysqli_fetch_assoc($result)): ?>
                         <tr>
@@ -69,6 +69,27 @@
         </table>
     </div>
 </div>
+
+
+<script>
+    // Highlight rows on hover for easier reading
+    const rows = document.querySelectorAll("#invoicesBody tr");
+
+    rows.forEach(function(row) {
+        row.addEventListener("mouseover", function() {
+            row.style.backgroundColor = "#fff0cc";
+            row.style.borderLeft = "4px solid #e74c3c";
+            row.style.cursor = "pointer";
+        });
+
+        row.addEventListener("mouseout", function() {
+            row.style.backgroundColor = "";
+            row.style.borderLeft = "";
+            row.style.cursor = "";
+        });
+    });
+</script>
+
 
 </body>
 </html>

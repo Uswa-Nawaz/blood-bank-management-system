@@ -232,7 +232,8 @@ require_once 'hospital_patient_records_backend.php';
 </div>
 
 <script>
-function switchTab(type) {
+    
+function switchTab(type) {    
     const tabs = document.querySelectorAll('.tab-btn');
     const patientNameGroup = document.getElementById('patientNameGroup');
     const urgencyGroup = document.getElementById('urgencyGroup');

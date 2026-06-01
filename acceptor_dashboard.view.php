@@ -47,7 +47,7 @@
 
     <div class="form-section full-width-form">
         <h2>Submit New Blood Request</h2>
-        <form action="process_blood_request.php" method="POST" class="request-grid-form">
+        <form action="process_blood_request.php" method="POST" class="request-grid-form" id="bloodRequestForm">      <!-- js -->
             
             <div class="form-group">
                 <label for="patient_name">Patient Name</label>
@@ -133,6 +133,21 @@
         </table>
     </div>
 </div>
+
+
+
+<script>
+    // Confirmation popup before submitting blood request
+    document.getElementById("bloodRequestForm").addEventListener("submit", function(e) {
+        const confirmed = confirm("Are you sure you want to submit this blood request?");
+
+        if (!confirmed) {
+            e.preventDefault(); // Stop form from submitting if user clicks Cancel
+        }
+    });
+</script>
+
+
 
 </body>
 </html>

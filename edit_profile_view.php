@@ -14,7 +14,7 @@
     <a href="donor_profile.php" class="active">My Profile</a>
     <a href="donation_history.php">Donation History</a>
     <a href="logout.php">Logout</a>
-</div>
+</div> 
 
 <div class="main-content">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="table-section" style="text-align: left; max-width: 600px; padding: 30px;">
-        <form action="update_profile_action.php" method="POST">
+         <form action="update_profile_action.php" method="POST" id="editProfileForm">         <!-- js -->
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: bold;">Full Name</label>
@@ -47,6 +47,19 @@
         </form>
     </div>
 </div>
+
+
+<script>
+    // Confirmation popup before saving changes
+    document.getElementById("editProfileForm").addEventListener("submit", function(e) {
+        const confirmed = confirm("Are you sure you want to save these changes?");
+        
+        if (!confirmed) {
+            e.preventDefault(); // Stop form from submitting if user clicks Cancel
+        }
+    });
+</script>
+
 
 </body>
 </html>

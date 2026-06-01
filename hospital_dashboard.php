@@ -68,25 +68,25 @@ require_once 'hospital_dashboard_backend.php';
             <div class="card">
                 <div class="card-icon">🩸</div>
                 <h3>Total Blood Bags</h3>
-                <div class="card-value"><?php echo $total_bags; ?></div>
+                <div class="card-value" id="totalBags"><?php echo $total_bags; ?></div>    <!-- js -->
                 <div class="card-sub">In local facility fridges</div>
             </div>
             <div class="card card-teal">
                 <div class="card-icon">🧑‍⚕️</div>
                 <h3>Active Patients</h3>
-                <div class="card-value"><?php echo $active_patients; ?></div>
+                <div class="card-value" id="activePatients"><?php echo $active_patients; ?></div>      <!-- js -->
                 <div class="card-sub">With active orders</div>
             </div>
             <div class="card card-gold">
                 <div class="card-icon">📋</div>
                 <h3>Pending Requests</h3>
-                <div class="card-value"><?php echo $pending_requests; ?></div>
+                <div class="card-value" id="pendingRequests"><?php echo $pending_requests; ?></div>     <!-- js -->
                 <div class="card-sub">Awaiting bank approval</div>
             </div>
             <div class="card card-blue">
                 <div class="card-icon">🚨</div>
                 <h3>Emergency Cases</h3>
-                <div class="card-value"><?php echo $emergency_cases; ?></div>
+                <div class="card-value" id="emergencyCases"><?php echo $emergency_cases; ?></div>    <!-- js -->
                 <div class="card-sub">Require immediate dispatch</div>
             </div>
         </div>
@@ -179,10 +179,48 @@ require_once 'hospital_dashboard_backend.php';
 
     </div>
 </div>
+ 
+
 
 <script>
+    // Live date display
     const d = new Date();
     document.getElementById('liveDate').textContent = d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+
+    // Animated number counter function
+    function animateCounter(elementId, target) {
+        const el = document.getElementById(elementId);
+        if (!el || isNaN(target)) return;
+
+        let current = 0;
+        const duration = 1000; // 1 second
+        const stepTime = 50;   // update every 50ms
+        const steps = duration / stepTime;
+        const increment = Math.ceil(target / steps);
+
+        const timer = setInterval(function() {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            el.textContent = current;
+        }, stepTime);
+    }
+
+    // Read values from PHP and animate
+    const totalBags = parseInt(document.getElementById("totalBags").textContent);
+    const activePatients = parseInt(document.getElementById("activePatients").textContent);
+    const pendingRequests = parseInt(document.getElementById("pendingRequests").textContent);
+    const emergencyCases = parseInt(document.getElementById("emergencyCases").textContent);
+
+    animateCounter("totalBags", totalBags);
+    animateCounter("activePatients", activePatients);
+    animateCounter("pendingRequests", pendingRequests);
+    animateCounter("emergencyCases", emergencyCases);
 </script>
+
+
+
 </body>
 </html>
