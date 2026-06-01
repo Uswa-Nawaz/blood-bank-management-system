@@ -4,29 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BloodConnect - Saving Lives</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bloodbank.css">
 </head>
 <body>
 
     <!-- Integrated Navigation Bar based on Image -->
-    <nav class="navbar">
-        <a href="index.html" class="nav-brand">BloodConnect</a>
-        <ul class="nav-links">
-            <li><a href="register_acceptor.html">Register as acceptor</a></li>
-            <li><a href="#">Login as acceptor</a></li>
-            <li><a href="#">Login as donor</a></li>
+     <nav class="navbar">
+        <div class="logo">BloodConnect</div>
+        <ul>
+          <li><a href="index.html"  class="active">Home</a></li>
+        <li><a href="register.html">Register Now</a></li>
+        <li><a href="login.html">Login</a></li>
+         <li class="dropdown">
+        <a href="#">Info Desk ▼</a>
+
+    <ul class="dropdown-menu">
+        <li><a href="guidelines.html">Guidelines for Donors</a></li>
+        <li><a href="requirements.html">Requirements for Donors</a></li>
+    </ul>
+</li>
+        <li><a href="about.html">About us</a></li>
+         <li><a href="contact.html">Contact Us</a></li>
         </ul>
     </nav>
+<div class="header">
+        <div class="container">
+<div class="row">
+  <div class="col-2">
+    <h1 style="text-align: left-center;margin-top: 90px; padding: 20px;">
+    <strong> <i> Blood</i> is Replaceable</strong> <br />
+    <strong><i>A Life is not</i></strong>
+    </h1>
+   <h2 style="margin-top: 35px;margin-left: 29px; text-align: left-center;"> Want to Donate Blood? <br>
+     <a href="register.html"><button class="submit-btn" style="width: auto; padding: 14px 20px; margin-top: 20px; margin-left: 20px;">Register Now &#8594;</button></a>
+        </p>
+  <h3 style="margin-top:20px; margin-left: 29px; text-align: left-center;"> Join us in our mission to save lives through blood donation. Your contribution can make a difference.</h3>
+<h2 style="margin-top: 20px; margin-left: 29px;"> Send us a Message </h2>
 
-    <div class="container">
-        <div class="main-content" style="text-align: center; padding: 100px 20px;">
-            <h1 style="font-size: 3rem; color: var(--primary-red);">Connecting Donors, Saving Lives</h1>
-            <p>Welcome to BloodConnect. Our goal is to connect generous donors like you with those who need it most.</p>
-            <div style="margin-top: 30px;">
-                <a href="register_acceptor.html" class="btn-primary" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 30px;">Request Blood</a>
-            </div>
-        </div>
-    </div>
+                <form class="card" style="margin-top: 30px;margin-left: 390px;">
+                    <h3>Send Message</h3>
+                    <input  type="text"  placeholder="Your Name" required>
+                    <br>
+                    <input type="email"  placeholder="Your Email" required>
+                    <br>
+                    <textarea placeholder="Message" rows="5" required></textarea>
+                    <br>
+                    <div style="text-align: center;"></div>
+                    <button type="submit" name="contact_submit" class="submit-btn" >Send Message</button>
+                    
+                    </div>
+                </form>
+</div>
+</div>
+</div>
+</div>
+  
+    <!-- ---------footer-------- -->
 
-</body>
+    <footer
+      class="footer">
+      <div class="container">
+        <p style="color: grey; text-align: center">
+          &copy; 2026 BloodBank Management System | All Rights Reserved
+        </p>
+      </div>
+      </footer>
+
+    </body>
 </html>
+

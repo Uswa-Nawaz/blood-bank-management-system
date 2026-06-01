@@ -19,7 +19,7 @@
 <div class="main-content">
     <h1>My Profile</h1>
 
-    <div class="table-section" style="text-align: left;">
+    <div class="table-section" style="text-align: left; max-width: 30%">
         <p><strong>Full Name:</strong> <?php echo htmlspecialchars($donor['fullName']); ?></p>
         <br>
         <p><strong>Phone:</strong> <?php echo htmlspecialchars($donor['phone']); ?></p>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Donation Requests - Admin Panel</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="donor.css">
     <style>
         .admin-container { display: flex; font-family: sans-serif; background-color: #f8f9fa; min-height: 100vh; }
         .sidebar { width: 250px; background-color: #7a1c1c; color: white; padding: 20px; }
